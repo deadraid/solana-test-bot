@@ -106,8 +106,9 @@ async fn main() -> Result<()> {
         compute_units_consumed: ui_meta.compute_units_consumed.into(),
     };
 
-    // Run through Meteora controller (assumes `simulate: true` in config.yaml)
-    let config = PingThingsArgs::new();
+    // Run through Meteora controller
+    let mut config = PingThingsArgs::new();
+    config.simulate = true; // Override: inject_sim ALWAYS simulates
     let bench = Bench::new(config.clone());
     let mut controller = MeteoraController::new(config, bench);
 

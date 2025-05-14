@@ -75,14 +75,19 @@ impl Bench {
     ) -> Result<()> {
         // -------- Simulation mode --------
         if self.config.simulate {
+            let rpc_client = RpcClient::new(self.config.http_rpc.clone());
+            let latest_blockhash = rpc_client
+                .get_latest_blockhash()
+                .await
+                .context("failed to fetch recent blockhash for simulation")?;
+
             let versioned_tx = build_meteora_swap_tx(
                 &self.tx_config,
-                &RpcType::SolanaRpc, // encoding doesn't matter in simulation
-                recent_blockhash,
+                &RpcType::SolanaRpc, // RPC type for simulation purposes
+                latest_blockhash,
                 &params,
             );
 
-            let rpc_client = RpcClient::new(self.config.http_rpc.clone());
             let sim_cfg = RpcSimulateTransactionConfig {
                 sig_verify: false,
                 replace_recent_blockhash: true,

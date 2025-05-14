@@ -1,0 +1,32 @@
+rpc:
+  "rpc1":
+    url: "https://api.mainnet-beta.solana.com"
+    rpc_type: "solanarpc"
+  "jito-rpc1":
+    url: "https://ny.mainnet.block-engine.jito.wtf/api/v1/transactions"
+    rpc_type: "jito"
+  "bloxroute1":
+    url: "https://ny.solana.dex.blxrbdn.com/api/v2/submit"
+    rpc_type: "bloxroute"
+    auth: "YOUR_BLOXROUTE_API_KEY"
+  "nextblock1":
+    url: "https://beta.nextblock.xyz/api/v1/submit"
+    rpc_type: "nextblock"
+    auth: "YOUR_NEXTBLOCK_API_KEY"
+
+geyser_url: ""
+geyser_x_token: ""
+
+http_rpc: "https://api.mainnet-beta.solana.com"
+ws_rpc: "wss://api.mainnet-beta.solana.com"
+
+private_key: ""
+
+compute_unit_price: 10000000
+compute_unit_limit: 100000
+
+tip: 0.001
+buy_amount: 0.0001
+min_amount_out: 100
+
+simulate: true

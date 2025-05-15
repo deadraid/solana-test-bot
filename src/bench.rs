@@ -102,12 +102,21 @@ impl Bench {
                 .await
                 .context("simulation RPC failed")?;
 
-            info!(
-                "[SIM] {} → compute_units={}, err={:?}",
-                rpc_sender.name(),
-                sim_res.value.units_consumed.unwrap_or_default(),
-                sim_res.value.err
-            );
+            if let Some(err_details) = &sim_res.value.err {
+                info!(
+                    "[SIM] {} → Simulation FAILED. Error: {:?}. Potential issues: insufficient funds, incorrect accounts, smart contract error, high slippage. Consumed CU: {}",
+                    rpc_sender.name(),
+                    err_details,
+                    sim_res.value.units_consumed.unwrap_or_default()
+                );
+            } else {
+                info!(
+                    "[SIM] {} → Simulation SUCCESSFUL. Consumed CU: {}",
+                    rpc_sender.name(),
+                    sim_res.value.units_consumed.unwrap_or_default()
+                );
+            }
+
             if let Some(logs) = sim_res.value.logs {
                 for l in logs {
                     debug!("[SIM_LOG] {}", l);
